@@ -8,10 +8,11 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 st.set_page_config(page_title="Analiza tendintelor de comsum App", layout="wide")
 
 ### Data Import ###
-
+import pandas as pd
 DATE_COLUMN = 'Order Date'
-DATA_URL = ('C:/Users/Mirela/PycharmProjects/hotel/cleaned.csv')
-
+SHEET_ID = '1EKX-KgMQ0tCJrqLTlxmBSECpK8iYMWnyq9WwROXZ47Y'
+SHEET_NAME = 'cleaned'
+DATA_URL = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={SHEET_NAME}'
 @st.cache
 def load_data(nrows):
     data = pd.read_csv(DATA_URL, nrows=nrows)
@@ -19,8 +20,10 @@ def load_data(nrows):
 
     return data
 df_database=load_data(10000)
-# streamlit_lottie(df_database, speed=1, height=200, key="initial")
 
+# streamlit_lottie(df_database, speed=1, height=200, key="initial")
+st.subheader('Raw data')
+st.write(df_database)
 row0_spacer1, row0_1, row0_spacer2, row0_2, row0_spacer3 = st.columns(
     (0.1, 2, 0.2, 1, 0.1)
 )
@@ -146,24 +149,24 @@ row5_space1, row5_1, row5_space2, row5_2, row5_space3 = st.columns(
 )
 
 with row5_1:
-    st.subheader("Distributia pretului unitar de vanzare")
+    st.subheader("Distributia discountului aplicat pentru vanzare")
     fig = px.histogram(
         df_database,
-        x="Sales",
-        title="Distributia pretului de vanzare",
+        x="Discount",
+        title="Distributia discountului",
         color_discrete_sequence=["#4c3ca3"],
     )
-    fig.update_xaxes(title_text="Pretul unitar")
+    fig.update_xaxes(title_text="Discount")
     fig.update_yaxes(title_text="Count")
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-    book_len_avg = round(np.mean(pd.to_numeric(df_database["Sales"].dropna())))
-    book_len_max = pd.to_numeric(df_database["Sales"]).max()
-    row_long = df_database[pd.to_numeric(df_database["Sales"]) == book_len_max]
+    book_len_avg = round(np.mean(pd.to_numeric(df_database["Discount"].dropna())))
+    book_len_max = pd.to_numeric(df_database["Discount"]).max()
+    row_long = df_database[pd.to_numeric(df_database["Discount"]) == book_len_max]
     longest_book = row_long["Sub-Category"].iloc[0]
 
     st.markdown(
-        "Pretul unitar mediu este de **{}**, iar cel mai mare pret unitar de vanzare este pentru subcategoria **{} in valoare de  {}!**.".format(
+        "Discountul mediu este de **{}**, iar cel mai mare discount este pentru subcategoria **{}**!".format(
             book_len_avg, longest_book, int(book_len_max)
         )
     )
