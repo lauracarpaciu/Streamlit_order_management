@@ -32,7 +32,7 @@ with row0_2:
     add_vertical_space()
 
 row0_2.subheader(
-    "A Streamlit web app by [Laura Carpaciu](https://lauracarpaciu.github.io), [BuLiAn GitHub Repository](https://github.com/tdenzl/BuLiAn))"
+    "A Streamlit web app by [Laura Carpaciu](https://lauracarpaciu.github.io), [Laura GitHub Repository](https://github.com/lauracarpaciu/Streamlit_order_management))"
 )
 row2_spacer1, row2_1, row2_spacer2 = st.columns((0.1, 3.2, 0.1))
 with row2_1:
