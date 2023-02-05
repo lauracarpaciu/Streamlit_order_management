@@ -83,7 +83,7 @@ with row3_2:
         age_df,
         x="Order Date",
         y="count",
-        title="Order Date",
+        title="Comenzi anuale",
         color_discrete_sequence=["#e3a462"],
     )
     fig.update_xaxes(title_text="Data comenzii")
