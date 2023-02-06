@@ -39,12 +39,11 @@ row0_2.subheader(
 )
 row2_spacer1, row2_1, row2_spacer2 = st.columns((0.1, 3.2, 0.1))
 with row2_1:
-    default_username = st.selectbox(
-        "Selecteaza numele autorului",
-        (
-            "laura carpaciu",
-                  ),
-    )
+    st.markdown("")
+    see_data = st.expander('You can click here to see the raw data first 👉')
+    with see_data:
+        st.dataframe(data=df_database.reset_index(drop=True))
+st.text('')
 
 u_books = len(df_database["Row ID"].unique())
 u_authors = len(df_database["Sub-Category"].unique())
