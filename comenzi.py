@@ -40,7 +40,7 @@ row0_2.subheader(
 row2_spacer1, row2_1, row2_spacer2 = st.columns((0.1, 3.2, 0.1))
 with row2_1:
     st.markdown("")
-    see_data = st.expander('You can click here to see the raw data first 👉')
+    see_data = st.expander('Poti sa apesi aici sa vezi setul de date 👉')
     with see_data:
         st.dataframe(data=df_database.reset_index(drop=True))
 st.text('')
