@@ -89,15 +89,15 @@ with row3_2:
     fig.update_yaxes(title_text="Count")
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-    avg_book_year = str(int(np.mean(pd.to_numeric(df_database["Order Date"]))))
+    avg_office_year = str(int(np.mean(pd.to_numeric(df_database["Order Date"]))))
     row_young = df_database.sort_values(by="Order Date", ascending=False).head(1)
-    youngest_book = row_young["Product Name"].iloc[0]
+    youngest_office = row_young["Product Name"].iloc[0]
     row_old = df_database.sort_values(by="Order Date").head(1)
-    oldest_book = row_old["Product Name"].iloc[0]
+    oldest_office = row_old["Product Name"].iloc[0]
 
     st.markdown(
         "Se observa ca media comenzilor este in  **{}**, cu cel mai vechi produs vandut **{}** si cel mai recent produs vandut  **{}**.".format(
-            avg_book_year, oldest_book, youngest_book
+            avg_office_year, oldest_office, youngest_office
         )
     )
 
@@ -110,13 +110,13 @@ row4_space1, row4_1, row4_space2, row4_2, row4_space3 = st.columns(
 
 with row4_1:
     st.subheader("Care este subcategoria cel mai des intalnita?")
-    author_gender_df = pd.DataFrame(
+    author_categ_df = pd.DataFrame(
         df_database["Sub-Category"].value_counts(normalize=True)
     ).reset_index()
     # plot bar plot of gender by percentage in plotly
-    author_gender_df.columns = ["Sub-Category", "Percentage"]
+    author_categ_df.columns = ["Sub-Category", "Percentage"]
     fig = px.bar(
-        author_gender_df,
+        author_categ_df,
         x="Sub-Category",
         y="Percentage",
         title="Procentul comenzilor in functie de subcategorie",
@@ -159,29 +159,29 @@ with row5_1:
     fig.update_yaxes(title_text="Count")
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-    book_len_avg = round(np.mean(pd.to_numeric(df_database["Discount"].dropna())))
-    book_len_max = pd.to_numeric(df_database["Discount"]).max()
-    row_long = df_database[pd.to_numeric(df_database["Discount"]) == book_len_max]
-    longest_book = row_long["Sub-Category"].iloc[0]
+    office_len_avg = round(np.mean(pd.to_numeric(df_database["Discount"].dropna())))
+    office_len_max = pd.to_numeric(df_database["Discount"]).max()
+    row_long = df_database[pd.to_numeric(df_database["Discount"]) == office_len_max]
+    longest_office = row_long["Sub-Category"].iloc[0]
 
     st.markdown(
         "Discountul mediu este de **{}**, iar cel mai mare discount este pentru subcategoria **{}**!".format(
-            book_len_avg, longest_book, int(book_len_max)
+            office_len_avg, longest_office, int(office_len_max)
         )
     )
 
 with row5_2:
     st.subheader("Distributia comenzilor pe regiuni in timp")
-    year_author_df = pd.DataFrame(
+    year_office_df = pd.DataFrame(
         df_database.groupby(["Order Date"])["Region"].value_counts(normalize=True)
     )
-    year_author_df.columns = ["Percentage"]
-    year_author_df.reset_index(inplace=True)
-    year_author_df = year_author_df[year_author_df["Order Date"] != ""]
-    year_author_df["Order Date"] = pd.to_timedelta(year_author_df["Order Date"])
+    year_office_df.columns = ["Percentage"]
+    year_office_df.reset_index(inplace=True)
+    year_office_df = year_office_df[year_office_df["Order Date"] != ""]
+    year_office_df["Order Date"] = pd.to_timedelta(year_office_df["Order Date"])
     # plot line plot in plotly of year_author_df with x axis as read_at_year, y axis is percentage, color is author gender
     fig = px.line(
-        year_author_df,
+        year_office_df,
         x="Order Date",
         y="Percentage",
         color="Region",
