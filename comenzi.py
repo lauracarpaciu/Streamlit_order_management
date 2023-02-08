@@ -45,8 +45,8 @@ with row2_1:
         st.dataframe(data=df_database.reset_index(drop=True))
 st.text('')
 
-u_books = len(df_database["Row ID"].unique())
-u_authors = len(df_database["Sub-Category"].unique())
+u_orders = len(df_database["Row ID"].unique())
+u_subcat = len(df_database["Sub-Category"].unique())
 
 st.write("")
 row3_space1, row3_1, row3_space2, row3_2, row3_space3 = st.columns(
@@ -66,8 +66,8 @@ with row3_1:
     )
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
     st.markdown(
-        "Se poate observa ca s-au plasat un numar de **{} comenzi din {} sub categorii,** cu {} fiind cea mai apreciata subcategorie! Este foarte interesant rezultatul. Acesta este tendinta pentru acest magazin.".format(
-            u_books, u_authors, df_database["Category"].mode()[0]
+        "Se poate observa ca s-au plasat un numar de **{} comenzi din {} sub categorii,** cu {} fiind cea mai apreciata categorie! Este foarte interesant rezultatul. Acesta este tendinta pentru acest magazin.".format(
+            u_orders, u_subcat, df_database["Category"].mode()[0]
         )
     )
 
@@ -171,6 +171,7 @@ with row5_1:
     )
 
 with row5_2:
+
     st.subheader("Distributia comenzilor pe regiuni in timp")
     year_office_df = pd.DataFrame(
         df_database.groupby(["Order Date"])["Region"].value_counts(normalize=True)
