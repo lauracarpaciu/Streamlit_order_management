@@ -28,7 +28,7 @@ row0_spacer1, row0_1, row0_spacer2, row0_2, row0_spacer3 = st.columns(
     (0.1, 2, 0.2, 1, 0.1)
 )
 
-row0_1.title("Analiza tendintelor de consum ale unui magazin universal")
+row0_1.title("Analysis of the consumption trends of a stationery store")
 
 
 with row0_2:
@@ -40,7 +40,7 @@ row0_2.subheader(
 row2_spacer1, row2_1, row2_spacer2 = st.columns((0.1, 3.2, 0.1))
 with row2_1:
     st.markdown("")
-    see_data = st.expander('Poti sa apesi aici sa vezi setul de date 👉')
+    see_data = st.expander('You can click here to see the data set 👉')
     with see_data:
         st.dataframe(data=df_database.reset_index(drop=True))
 st.text('')
@@ -53,7 +53,7 @@ row3_space1, row3_1, row3_space2, row3_2, row3_space3 = st.columns(
     (0.1, 1, 0.1, 1, 0.1)
 )
 with row3_1:
-    st.subheader("Comenzi")
+    st.subheader("Placed orders")
     year_df = pd.DataFrame(df_database["Order Date"].dropna().value_counts()).reset_index()
     year_df = year_df.sort_values(by="index")
     year_df.columns = ["Year", "Count"]
@@ -61,31 +61,31 @@ with row3_1:
         year_df,
         x="Year",
         y="Count",
-        title="Comenzi anuale",
+        title="Orders by year",
         color_discrete_sequence=["#7b2e80"],
     )
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
     st.markdown(
-        "Se poate observa ca s-au plasat un numar de **{} comenzi din {} sub categorii,** cu {} fiind cea mai apreciata categorie! Este foarte interesant rezultatul. Acesta este tendinta pentru acest magazin.".format(
+        "It can be seen that a number of **{} orders from {} subcategories,** with {} being the most popular category! This is the trend for this store.".format(
             u_orders, u_subcat, df_database["Category"].mode()[0]
         )
     )
 
 
 with row3_2:
-    st.subheader("Tendinte")
+    st.subheader("The consumption trend")
     # plots a bar chart of the dataframe df by book.publication year by count in plotly. columns are publication year and count
     age_df = pd.DataFrame(df_database["Order Date"].value_counts()).reset_index()
     age_df = age_df.sort_values(by="index")
-    age_df.columns = ["Order Date", "count"]
+    age_df.columns = ["Order Date", "Count"]
     fig = px.bar(
         age_df,
         x="Order Date",
-        y="count",
-        title="Comenzi anuale",
+        y="Count",
+        title="Orders by year",
         color_discrete_sequence=["#e3a462"],
     )
-    fig.update_xaxes(title_text="Data comenzii")
+    fig.update_xaxes(title_text="Year")
     fig.update_yaxes(title_text="Count")
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
@@ -96,7 +96,7 @@ with row3_2:
     oldest_office = row_old["Product Name"].iloc[0]
 
     st.markdown(
-        "Se observa ca media comenzilor este in  **{}**, cu cel mai vechi produs vandut **{}** si cel mai recent produs vandut  **{}**.".format(
+        "It can be seen that the average of the orders is in  **{}**, with the oldest product sold **{}** and the latest product sold  **{}**.".format(
             avg_office_year, oldest_office, youngest_office
         )
     )
@@ -109,7 +109,7 @@ row4_space1, row4_1, row4_space2, row4_2, row4_space3 = st.columns(
 
 
 with row4_1:
-    st.subheader("Care este subcategoria cel mai des intalnita?")
+    st.subheader("What is the most common subcategory?")
     author_categ_df = pd.DataFrame(
         df_database["Sub-Category"].value_counts(normalize=True)
     ).reset_index()
@@ -119,27 +119,27 @@ with row4_1:
         author_categ_df,
         x="Sub-Category",
         y="Percentage",
-        title="Procentul comenzilor in functie de subcategorie",
+        title="Percentage of orders according to subcategory",
         color_discrete_sequence=["#444657"],
     )
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
     st.markdown(
-        "Din grafic se poate observa tendinta de consum pentru fiecare subcategorie ")
+        "The chart shows the consumption trend for each subcategory ")
 
 
 with row4_2:
-    st.subheader("Ce cantitate se comanda cel mai frecvent?")
+    st.subheader("What quantity is most frequently ordered?")
     fig = px.histogram(
         df_database,
         x="Quantity",
-        title="Tendinta ",
+        title="The consumption trend ",
         color_discrete_sequence=["#e3a462"],
     )
-    fig.update_xaxes(title_text="Cantitatea comandata")
+    fig.update_xaxes(title_text="The ordered quantity ")
     fig.update_yaxes(title_text="Count")
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
     st.markdown(
-        "Se poate observa care este distributia cantitatii comandate de catre clientii magazinului!"
+        "You can see the distribution of the quantity ordered by the store's customers!"
     )
 
 add_vertical_space()
@@ -148,11 +148,11 @@ row5_space1, row5_1, row5_space2, row5_2, row5_space3 = st.columns(
 )
 
 with row5_1:
-    st.subheader("Distributia discountului aplicat pentru vanzare")
+    st.subheader("The distribution of the discount applied for the sale")
     fig = px.histogram(
         df_database,
         x="Discount",
-        title="Distributia discountului",
+        title="The discount ' distribution",
         color_discrete_sequence=["#4c3ca3"],
     )
     fig.update_xaxes(title_text="Discount")
@@ -165,14 +165,14 @@ with row5_1:
     longest_office = row_long["Sub-Category"].iloc[0]
 
     st.markdown(
-        "Discountul mediu este de **{}**, iar cel mai mare discount este pentru subcategoria **{}**!".format(
+        "The average discount is **{}**, and the biggest discount is for the subcategory **{}**!".format(
             office_len_avg, longest_office, int(office_len_max)
         )
     )
 
 with row5_2:
 
-    st.subheader("Distributia comenzilor pe regiuni in timp")
+    st.subheader("The distribution of orders by region, on time")
     year_office_df = pd.DataFrame(
         df_database.groupby(["Order Date"])["Region"].value_counts(normalize=True)
     )
@@ -186,17 +186,17 @@ with row5_2:
         x="Order Date",
         y="Percentage",
         color="Region",
-        title="Procentul comenzilor in functie de regiune in timp",
+        title="The percentage of orders depending on the region over time",
     )
-    fig.update_xaxes(title_text="Anul comenzii")
+    fig.update_xaxes(title_text="Year")
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
     st.markdown(
-        "Se poate observa procentul comenzilor in functie de fiecare regiune si cum s-a schimbat acesta in timp."
+        "You can see the percentage of orders depending on each region and how it has changed over time."
     )
 add_vertical_space()
 row7_spacer1, row7_1, row7_spacer2 = st.columns((0.1, 3.2, 0.1))
 
 st.markdown("***")
 st.markdown(
-        "Multumesc pentru ca ati parcurs aceasta analiza! Apreciez feedbaack- ul, si daca doriti sa stiti mai multe ma puteti gasi pe [website](https://lauracarpaciu.github.io) ")
+        "Thank you for reading this review! I appreciate the feedback, and if you want to know more you can find me at [website](https://lauracarpaciu.github.io) ")
 
